@@ -23,66 +23,10 @@ This methodology helps:
 - Reduce rework and improve code quality
 - Provide clear tracking and transparency for development progress
 
-## The Three Meta-Prompts
-
-Each meta-prompt is a self-contained, ready-to-use prompt. Simply copy the contents of each file and paste it directly into your AI assistant. Each subsequent meta-prompt depends on outputs (a command file created) from the previous one.
-
-### 1. Plan Meta-Prompt (`create-plan.md`) - Use First
-
-**Purpose:** Generated command creates a comprehensive development plan for a feature or bug fix.
-
-**Usage:**
-1. Copy the contents of `create-plan.md`
-2. Paste it directly into your AI assistant (Claude Code, Copilot, Cursor, etc.)
-3. The AI will guide you through:
-   - Gathering issue number, feature name, and task specification
-   - Scanning your codebase for relevant context
-   - Creating a structured plan with:
-     - Feature description
-     - Root cause analysis (when applicable)
-     - Relevant code references
-     - Open questions (for clarification)
-     - Self-reflection questions for the AI
-     - Detailed, enumerated execution steps/phases
-     - Acceptance criteria
-4. Output: A markdown file saved in `.ai/` folder named `{issue-number}_{feature-short-name}.md`
-
-### 2. Plan-Update Meta-Prompt (`plan-update.md`) - Use Second (Optional)
-
-**Purpose:** Generated command updates an existing plan when specifications change or clarifications are needed.
-
-**Usage:**
-1. Copy the contents of `plan-update.md`
-2. Paste it directly into your AI assistant
-3. The AI will guide you through:
-   - Identifying the plan to update (created in step 1)
-   - Specifying changes needed (spec changes, Q&A answers, new criteria, etc.)
-   - Updating the plan consistently across all sections
-   - Interactively clarifying incomplete information
-4. Output: Updated plan in the same `.ai/` file
-
-**When to use:** Only if requirements change or open questions get answered before execution.
-
-### 3. Execute Meta-Prompt (`execute.md`) - Use Last
-
-**Purpose:** Generated command implements the plan by executing selected steps or phases.
-
-**Usage:**
-1. Copy the contents of `execute.md`
-2. Paste it directly into your AI assistant
-3. The AI will guide you through:
-   - Loading your plan (created/updated in steps 1-2)
-   - Selecting which steps or phases to execute
-   - Implementing each step systematically
-   - Supporting interactive checkpoints for review
-   - Updating the plan with execution status
-4. Output: Implementation of the feature/fix and updated plan showing completion status
-
-**Dependency:** Requires a plan created by `plan` command (optionally updated by `plan-update` command)
-
 ## How to Use These Meta-Prompts
 
-These meta-prompts are **self-contained and ready to use immediately**. No setup or command installation required. Simply follow this workflow:
+Each meta-prompt is a self-contained, ready-to-use prompt. Simply copy the contents of each file and paste it directly into your AI assistant. Each subsequent meta-prompt depends on outputs (a command file created) from the previous one.
+No setup or command installation required. Simply follow this workflow:
 
 ### Quick Start Workflow
 
@@ -105,25 +49,13 @@ These meta-prompts are **self-contained and ready to use immediately**. No setup
 
 ### How Each Meta-Prompt Works
 
-- **`create-plan.md`** - Create command that orchestrates plan creation. Paste and follow the AI's guidance.
-- **`plan-update.md`** - Create command that updates existing plans. References plans created by `create-plan.md`.
-- **`execute.md`** - Create command that executes plans. References plans from `create-plan.md` and `plan-update.md`.
-
-Each meta-prompt is independent and self-contained—no code generation, no command installation needed.
-
-## Deliverable Increments
-
-The Plan & Execute method emphasizes breaking work into **deliverable increments** - discrete chunks of work that:
-- Represent a complete, testable feature or fix
-- Can be safely merged into the main branch
-- Don't compromise code quality or stability
-- Each can be released independently if needed
-
-This approach enables continuous integration and reduces the risk of large, monolithic commits.
+- **`create-plan.md`** - Create command that orchestrates plan creation. Paste and follow the AI's guidance. Normally results in creation of `/plan` command.
+- **`plan-update.md`** - Create command that updates existing plans. References plans created by `create-plan.md`. Normally results in creation of `/plan-update` command.
+- **`execute.md`** - Create command that executes plans. References plans from `create-plan.md` and `plan-update.md`. Normally results in creation of `/execute` command.
 
 ## Adaptation for Other Tools
 
-These meta-prompts are **tool-agnostic** - they work with any AI coding assistant and can be used immediately without modification. The methodology works equally well with:
+These meta-prompts are **tool-agnostic** - they work with any AI coding assistant and can be used immediately without major modification (although perhaps one needs to adjust file paths used internally, like instead `.claude\commands\plan.md` use `.github\prompts\plan.prompt.md` when using Copilot). The methodology works equally well with:
 
 - **GitHub Copilot** - Paste meta-prompts into Copilot chat
 - **Cursor** - Use in Cursor's command system or chat
