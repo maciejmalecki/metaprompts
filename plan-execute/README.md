@@ -7,7 +7,7 @@ This folder contains **self-contained meta-prompts** for the Plan & Execute meth
 2. **`plan-update.md`** - Creates command that updates the plan
 3. **`execute.md`** - Creates command that executes the plan
 
-**BEWARE:** I was lazy and have generated this file via AI Agent. I did some manual changes to make it better, but there still might be some inconsistencies or errors, or notorious repetitions. Please report any issues you find.
+**BEWARE:** I was lazy and have generated this README file via AI Agent. I did some manual changes to make it better, but there still might be some inconsistencies or errors, or notorious repetitions. Please report any issues you find.
 
 ## Overview
 
