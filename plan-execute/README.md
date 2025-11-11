@@ -1,8 +1,13 @@
 # Plan & Execute Method
 
-This folder contains meta-prompts for the Plan & Execute method of software development with AI Agents.
+This folder contains **self-contained meta-prompts** for the Plan & Execute method of software development with AI Agents. Each meta-prompt is a complete prompt designed to be pasted directly into an AI coding assistant (like Claude Code, Copilot, Cursor, etc.) to orchestrate development workflows.
 
-**BEWARE:** This README.md is AI generated. I have reviewed it thoroughly, but there may still be inaccuracies. Please report any issues.
+**Important:** These meta-prompts should be used in the following order:
+1. **`create-plan.md`** - Creates command that generates the initial plan
+2. **`plan-update.md`** - Creates command that updates the plan
+3. **`execute.md`** - Creates command that executes the plan
+
+**BEWARE:** I was lazy and have generated this file via AI Agent. I did some manual changes to make it better, but there still might be some inconsistencies or errors, or notorious repetitions. Please report any issues you find.
 
 ## Overview
 
@@ -18,92 +23,93 @@ This methodology helps:
 - Reduce rework and improve code quality
 - Provide clear tracking and transparency for development progress
 
-## The Three-Command Workflow
+## The Three Meta-Prompts
 
-### 1. Plan Command (`create-plan.md`)
+Each meta-prompt is a self-contained, ready-to-use prompt. Simply copy the contents of each file and paste it directly into your AI assistant. Each subsequent meta-prompt depends on outputs (a command file created) from the previous one.
 
-**Purpose:** Generate a comprehensive development plan for a feature or bug fix.
+### 1. Plan Meta-Prompt (`create-plan.md`) - Use First
 
-**When to use:** At the start of a new feature development or when tackling a complex bug.
+**Purpose:** Generated command creates a comprehensive development plan for a feature or bug fix.
 
-**Process:**
-- Takes an issue number, feature name, and task specification as input
-- Scans the existing codebase for relevant context and patterns
-- Generates a structured plan with:
-  - Feature description
-  - Root cause analysis (when applicable)
-  - Relevant code references
-  - Open questions (for clarification with stakeholders)
-  - Self-reflection questions for the AI
-  - Detailed, enumerated execution steps/phases
-  - Acceptance criteria
+**Usage:**
+1. Copy the contents of `create-plan.md`
+2. Paste it directly into your AI assistant (Claude Code, Copilot, Cursor, etc.)
+3. The AI will guide you through:
+   - Gathering issue number, feature name, and task specification
+   - Scanning your codebase for relevant context
+   - Creating a structured plan with:
+     - Feature description
+     - Root cause analysis (when applicable)
+     - Relevant code references
+     - Open questions (for clarification)
+     - Self-reflection questions for the AI
+     - Detailed, enumerated execution steps/phases
+     - Acceptance criteria
+4. Output: A markdown file saved in `.ai/` folder named `{issue-number}_{feature-short-name}.md`
 
-**Output:** A markdown file stored in `.ai/` folder with naming convention: `{issue-number}_{feature-short-name}.md`
+### 2. Plan-Update Meta-Prompt (`plan-update.md`) - Use Second (Optional)
 
-### 2. Execute Command (`execute.md`)
+**Purpose:** Generated command updates an existing plan when specifications change or clarifications are needed.
 
-**Purpose:** Implement an action plan by executing selected steps or phases.
+**Usage:**
+1. Copy the contents of `plan-update.md`
+2. Paste it directly into your AI assistant
+3. The AI will guide you through:
+   - Identifying the plan to update (created in step 1)
+   - Specifying changes needed (spec changes, Q&A answers, new criteria, etc.)
+   - Updating the plan consistently across all sections
+   - Interactively clarifying incomplete information
+4. Output: Updated plan in the same `.ai/` file
 
-**When to use:** After a plan has been created and reviewed, to implement the work.
+**When to use:** Only if requirements change or open questions get answered before execution.
 
-**Process:**
-- User selects which steps or phases to execute ("all" or specific ranges)
-- Optionally requests prompts between each step/phase for review
-- Implements each step systematically
-- Updates the plan with execution status
-- Marks completed, skipped, or pending steps
+### 3. Execute Meta-Prompt (`execute.md`) - Use Last
 
-**Key features:**
-- Flexible execution (partial or full)
-- Interactive checkpoints for user approval
-- Progress tracking within the plan
-- Clear documentation of what was completed
+**Purpose:** Generated command implements the plan by executing selected steps or phases.
 
-### 3. Plan-Update Command (`plan-update.md`)
+**Usage:**
+1. Copy the contents of `execute.md`
+2. Paste it directly into your AI assistant
+3. The AI will guide you through:
+   - Loading your plan (created/updated in steps 1-2)
+   - Selecting which steps or phases to execute
+   - Implementing each step systematically
+   - Supporting interactive checkpoints for review
+   - Updating the plan with execution status
+4. Output: Implementation of the feature/fix and updated plan showing completion status
 
-**Purpose:** Update an existing plan when specifications change or clarifications are needed.
-
-**When to use:** When:
-- Requirements change during development
-- Open questions get answered
-- Additional acceptance criteria are identified
-- Stakeholder feedback necessitates plan revision
-
-**Process:**
-- User identifies the plan to update
-- Specifies the scope of changes (spec changes, Q&A answers, new criteria, etc.)
-- Agent updates the plan consistently across all relevant sections
-- Interactively clarifies incomplete information
+**Dependency:** Requires a plan created by `plan` command (optionally updated by `plan-update` command)
 
 ## How to Use These Meta-Prompts
 
-These files are **meta-prompts** - prompts that generate other prompts. Here's how to use them:
+These meta-prompts are **self-contained and ready to use immediately**. No setup or command installation required. Simply follow this workflow:
 
-### Step 1: Generate Claude Commands
+### Quick Start Workflow
 
-Take each meta-prompt file (e.g., `create-plan.md`, `execute.md`, `plan-update.md`) and use it with Claude Code to generate actual commands:
+1. **Create a plan:**
+   - Copy the entire contents of `create-plan.md`
+   - Paste it into your AI assistant
 
-1. Ask Claude Code: *"Using the guidance in this meta-prompt [insert file contents], generate a complete Claude command for me"*
-2. Claude will create a comprehensive prompt designed to orchestrate AI behavior
-3. Save the generated prompt in `.claude/commands/` folder with the appropriate name (e.g., `plan.md`, `execute.md`, `plan-update.md`)
+2. **Update the plan (optional):**
+   - Copy the entire contents of `plan-update.md`
+   - Paste it into your AI assistant
 
-### Step 2: Use the Generated Commands
+3. **Execute the plan:**
+   - Copy the entire contents of `execute.md`
+   - Paste it into your AI assistant
 
-Once installed as Claude commands, use them in your workflow:
+4. **Review and commit:**
+   - Review generated prompts
+   - Commit changes
+   - Restart your AI Agent (i.e. Claude Code) and test generated commands using slash (/) notation
 
-```bash
-/plan               # Start planning a new feature
-/execute            # Execute an existing plan
-/plan-update        # Update an existing plan
-```
+### How Each Meta-Prompt Works
 
-### Step 3: Follow the Workflow
+- **`create-plan.md`** - Create command that orchestrates plan creation. Paste and follow the AI's guidance.
+- **`plan-update.md`** - Create command that updates existing plans. References plans created by `create-plan.md`.
+- **`execute.md`** - Create command that executes plans. References plans from `create-plan.md` and `plan-update.md`.
 
-- Create a plan with `/plan` for new features
-- Review and refine the plan
-- Execute with `/execute` when ready
-- Update with `/plan-update` if needed
-- Commit changes following the conventional commit format defined in CLAUDE.md
+Each meta-prompt is independent and self-contained—no code generation, no command installation needed.
 
 ## Deliverable Increments
 
@@ -117,21 +123,33 @@ This approach enables continuous integration and reduces the risk of large, mono
 
 ## Adaptation for Other Tools
 
-These meta-prompts were created for **Claude Code**, but the methodology is tool-agnostic and can be easily adapted for:
+These meta-prompts are **tool-agnostic** - they work with any AI coding assistant and can be used immediately without modification. The methodology works equally well with:
 
-- **GitHub Copilot** - Generate similar commands/workflows adapted to Copilot's interfaces
-- **Cursor** - Customize for Cursor's command system
-- **Windsurf** - Adapt the methodology to Windsurf's capabilities
-- **Cline** - Adjust for Cline's specific AI orchestration patterns
+- **GitHub Copilot** - Paste meta-prompts into Copilot chat
+- **Cursor** - Use in Cursor's command system or chat
+- **Windsurf** - Paste into Windsurf's AI interactions
+- **Cline** - Use in Cline's conversation interface
+- **Any AI coding assistant** - That accepts multi-paragraph prompts
 
-To adapt for another tool:
-1. Understand the tool's command/prompt system
-2. Take the relevant meta-prompt
-3. Ask Claude to regenerate the prompt for your target tool
-4. Adjust syntax/formatting to match the tool's requirements
-5. Test with a sample feature
+The meta-prompts are self-contained and require **no adaptation** for different tools—just copy and paste.
 
-The core methodology remains the same regardless of the AI tool used.
+### Customizing Meta-Prompts for Your Workflow
+
+If you want to customize a meta-prompt for your specific needs:
+
+1. **Read the meta-prompt** - Understand what it does
+2. **Identify what to change** - E.g., different plan structure, additional questions, specific code patterns to look for
+3. **Edit the meta-prompt file** - Modify the instructions directly in the markdown file
+4. **Test with your AI assistant** - Paste the modified version and verify it works as expected
+
+**Example customization:**
+If you want the plan to include additional security considerations, you could edit `create-plan.md` to add:
+```
+- Security analysis: Identify any security implications of this feature
+- Required security reviews: List any security reviews needed before merge
+```
+
+The core methodology remains effective regardless of tool or customization.
 
 ## Best Practices
 
